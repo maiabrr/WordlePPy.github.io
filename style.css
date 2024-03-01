@@ -1,49 +1,93 @@
 body {
-    font-family: Arial, sans-serif;
-  }
-     
-  h1 {
-    text-align: center;
-    margin-top: 50px;
-  }
-     
-  #guess-input {
-    display: block;
-    margin: 0 auto 20px;
-    padding: 10px;
-    font-size: 18px;
-    width: 250px;
-    border: 1px solid #ccc;
-  }
-     
-  #guess-button {
-    display: block;
-    margin: 0 auto;
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: #0CBABA;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-  }
-     
-  button:active {
-      transform: scale(0.95);
-  }
-     
-  .letter {
-      border: 1px solid black;
-      padding: 3px;
-      margin: 3px;
-      min-width: 20px;
-      text-align: center;
-      display: inline-block
-  }
-     
-  .row{
-      margin-bottom: 10px;
-  }
-     
-  .input-area{
-      margin: 30px;
-  }
+  font-family: HeLvetica;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: #20B152;
+  font-style: bold;
+  text-align: center;
+  margin-top: 50px;
+}
+
+input {
+  display: block;
+  margin: 20px auto;
+  padding: 10px;
+  width: 200px;
+  border: none;
+}
+
+button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #20B152;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+#msg {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#mensajes {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.grid-container {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border: none;
+}
+
+.grid-item {
+  background-color: #dce1ed; 
+  padding: 10px; 
+  text-align: center; 
+  width: 20px;
+  height: 20px;
+  font-family: Helvetica;
+  font-weight: bold;
+  border-radius: 10px;
+}
+.hide {
+  display: none;
+}
+.show {
+  display: flex;
+}
+#msg {
+  font-size: 24px;
+  font-weight: bold;
+  color: #20B152;
+}
+
+#msg.ganaste {
+  color: green;
+}
+
+#msg.perdiste {
+  color: red;
+}
+
+.green {
+  background-color:#66f066;
+}
+.yellow {
+  background-color: yellow;
+}
+.red {
+  background-color: red;
+}
+.gray {
+  background-color:#e4e1e1;
+}

@@ -1,18 +1,55 @@
 <!DOCTYPE html>
- <html>
-   <head>
-     <title>Wordle PPY</title>
- 		<link rel="stylesheet" href="style.css">
-        <script src="script.js" defer></script>
-   </head>
-   <body>
-     <h1>Wordle PPY</h1>
-     <input type="text" id="guess-input">
-     <button id="guess-button">Intentar</button>
-     <div id="grid">
-                    <div class='row'> 
-                    </div>   
-     </div>
-     <p id="guesses">
-   </body>
- </html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script defer src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Wordle PPY</title>
+</head>
+<body>
+    <h1>Wordle PPY</h1>
+    <input type="text" id="palabra" maxlength="5">
+    <button id="btn">JUGAR</button>
+    <div id="msg"></div>
+    <p id="mensajes"></p>      
+      <div class="grid-container intento1 hide">
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+      </div>
+      <div class="grid-container intento2 hide">
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+      </div>
+      <div class="grid-container intento3 hide">
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+      </div>
+      <div class="grid-container intento4 hide">
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+      </div>
+      <div class="grid-container intento5 hide">
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+      </div>      
+      <p id= "msg"></p>
+    
+    
+</body>
+</html>

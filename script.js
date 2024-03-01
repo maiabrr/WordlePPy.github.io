@@ -1,56 +1,90 @@
-//variable que contiene la cantidad de intentos
-let intentos = 6;
-//array de palabras
-let diccionario = ['APPLE', 'HURLS', 'WINGS', 'YOUTH']
-//constante que permite escoger una palabra random del array diccionarios
-const palabra = diccionario[Math.floor(Math.random() * diccionario.length)];
-window.addEventListener('load', init);
-function init(){}
-const button = document.getElementById("guess-button");
-button.addEventListener("click", intentar);
-function intentar(){
-    const INTENTO = leerIntento();
-    if (INTENTO === palabra ) {
-        terminar("<h1>GANASTE! :) </h1>")
-        return
-    }
-    const GRID = document.getElementById("grid");
-    const ROW = document.createElement('div');
-    ROW.className = 'row';
-    for (let i in palabra){
-        const SPAN = document.createElement('span');
-        SPAN.className = 'letter';
-        if (INTENTO[i]===palabra[i]){
-            SPAN.innerHTML = INTENTO[i];
-            SPAN.style.backgroundColor = '#79b851';
-        } else if( palabra.includes(INTENTO[i]) ) {
-            SPAN.innerHTML = INTENTO[i];
-            SPAN.style.backgroundColor = '#f3c237';
-        } else {
-            SPAN.innerHTML = INTENTO[i];
-            SPAN.style.backgroundColor = '#a4aec4';
-        }
-        ROW.appendChild(SPAN);
-    }
-    GRID.appendChild(ROW);
-            intentos--
-    if (intentos==0){
-        terminar("<h1>PERDISTE :( </h1>")
-    }
+let palabra;
+let palabraAleatoria;
+let intentos = 0;
+
+document.addEventListener("DOMContentLoaded", async function () {
+  palabraAleatoria = await obtenerPalabraAleatoria();
+  palabraAleatoria = palabraAleatoria.toUpperCase();
+  console.log('Palabra aleatoria:', palabraAleatoria);
+});
+
+document.querySelector("button").addEventListener("click", function () {
+  palabra = document.getElementById("palabra").value;
+  palabra = palabra.toUpperCase();
+  intentos++;
+  jugar();
+  document.getElementById("palabra").value = ""; //limpiar el campo de entrada despues de cada intento
+});
+
+//obtener las palabras de la api
+let diccionario = "https://random-word-api.herokuapp.com/word?lang=es&length=5";
+
+//funcion asincrona para obtener una palabra aleatoria
+async function obtenerPalabraAleatoria() {
+  try {
+    //obtener la respuesta con fetch
+    const response = await fetch(diccionario);
+    //obtener el texto de la respuesta
+    const data = await response.json();
+    console.log('Palabra aleatoria:', data);
+    const palabras = data;
+    //obtener una palabra aleatoria 
+    const palabraAleatoria = palabras[0];
+    //retorna la palabra aleatoria
+    return palabraAleatoria;
+  } catch (error) {
+    console.error('Error al obtener la palabra aleatoria:', error);
+  }
+
 }
-const input = document.getElementById("guess-input");
-const valor = input.value;
-function leerIntento(){
-    let intento = document.getElementById("guess-input");
-    intento = intento.value;
-    intento = intento.toUpperCase(); 
-    return intento;
-}
-function terminar(mensaje){
-    const INPUT = document.getElementById("guess-input");
-    const BOTON = document.getElementById("guess-button");
-    INPUT.disabled = true;
-    BOTON.disabled = true;
-    let contenedor = document.getElementById('guesses');
-    contenedor.innerHTML = mensaje;
+//funcion para comparar las letras con cada letra de la palabra aleatoria
+function compararLetras(palabra, palabraAleatoria) {
+  let aciertos = 0;
+  let fallos = 0;
+  let letraEnPosicionEq = 0;
+  let letras = new Array(palabra.length).fill('');
+  for (let i = 0; i < palabraAleatoria.length; i++) {
+    if (palabraAleatoria[i] === palabra[i]) {
+      letras[i] = 'green';
+      aciertos++;
+    } else if (palabraAleatoria.slice(i).includes(palabra[i])) {
+      letras[i] = 'yellow';
+      letraEnPosicionEq++;
+      console.log(palabra, palabraAleatoria[i])
+    } else {
+      letras[i] = 'gray';
+      fallos++;
+    }
+  }
+  return [aciertos, fallos, letraEnPosicionEq, letras];
+};
+//juego principal
+async function jugar() {
+  let [aciertos, fallos, letras] = compararLetras(palabra, palabraAleatoria);
+  const caritaTriste = '\u{1F622}';
+  const caritaFesteja = '\u{1F389}';
+  console.log('comparar Letras', aciertos, fallos, letras)
+  document.getElementById("msg").innerHTML = `Letras acertadas: ${aciertos} Letras falladas: ${fallos}`;
+  if (aciertos === palabra.length) {
+    document.getElementById("msg").innerHTML = `¡GANASTE! La palabra era ${palabraAleatoria}` + caritaFesteja;
+  }
+  if (intentos === 6) {
+    document.getElementById("msg").innerHTML = `PERDISTE! La palabra era ${palabraAleatoria}` + caritaTriste;
+  }
+  else {
+    const contenedor = document.querySelector("div.grid-container.intento" + (intentos));
+    contenedor.classList.remove('hide');
+    contenedor.classList.add('show');
+    // Obtener los divs por su clase
+    const divs = document.querySelectorAll("div.grid-container.intento" + (intentos) + " .grid-item");
+    // Mostrar los aciertos en los divs correspondientes
+    // Verificar la longitud de los arrays de aciertos y fallo
+    divs.forEach((div, index) => {
+      div.innerHTML = palabra[index];
+      div.classList.remove('gray', 'yellow', 'green');
+      div.classList.add(letras[index]);
+    });
+  }
+
+
 }
